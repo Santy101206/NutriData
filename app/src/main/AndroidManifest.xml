@@ -1,38 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.santy.nutridata">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="NutriData Medical"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NutriData">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <!-- Pantalla de login -->
+        <!-- Activity principal: pantalla de login -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Controller.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Registro de usuario -->
-        <activity android:name=".RegisterActivity" />
+        <!-- Registro de usuarios -->
+        <activity
+            android:name=".Controller.RegisterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <!-- Menú principal -->
-        <activity android:name=".MenuActivity" />
+        <activity
+            android:name=".Controller.MenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- Ingreso de datos dinámicos -->
-        <activity android:name=".DataEntryActivity" />
+        <!-- Ingreso de datos -->
+        <activity
+            android:name=".Controller.DataEntryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- Historial de registros -->
-        <activity android:name=".HistoryActivity" />
+        <!-- Historial de pacientes -->
+        <activity
+            android:name=".Controller.HistoryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
-        <!-- Edición de registros -->
-        <activity android:name=".EditEntryActivity" />
+        <!-- Edición de registro -->
+        <activity
+            android:name=".Controller.EditEntryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Asistente de Fórmulas Médicas -->
+        <activity
+            android:name=".Controller.FormulaMedicaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Menú de Fórmulas Médicas -->
+        <activity
+            android:name=".Controller.FormulasMedicasMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- Fórmula Médica Rápida -->
+        <activity
+            android:name=".Controller.FormulaMedicaRapidaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
     </application>
 

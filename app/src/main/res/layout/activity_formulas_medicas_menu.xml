@@ -8,20 +8,21 @@
     android:background="#E8F5E8">
 
     <TextView
-        android:id="@+id/tvWelcome"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido, Doctor"
-        android:textSize="22sp"
+        android:text="Asistente de Fórmulas Médicas"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#2E7D32"
+        android:gravity="center"
         android:layout_marginBottom="48dp" />
 
     <Button
-        android:id="@+id/btnAddData"
+        android:id="@+id/btnBuscarPaciente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👥 Ingresar Datos del Paciente"
+        android:text="👤 Buscar Paciente en Historial"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#2196F3"
         android:textColor="@android:color/white"
@@ -30,10 +31,10 @@
         android:padding="18dp" />
 
     <Button
-        android:id="@+id/btnHistory"
+        android:id="@+id/btnFormulaRapida"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="📊 Ver Historial de Pacientes"
+        android:text="⚡ Fórmula Rápida (Sin Paciente)"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FF9800"
         android:textColor="@android:color/white"
@@ -42,23 +43,11 @@
         android:padding="18dp" />
 
     <Button
-        android:id="@+id/btnFormulasMedicas"
+        android:id="@+id/btnVolver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🧑‍⚕️ Asistente de Fórmulas Médicas"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#4CAF50"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:padding="18dp" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🚪 Cerrar Sesión"
-        android:backgroundTint="#F44336"
+        android:text="↩️ Volver al Menú Principal"
+        android:backgroundTint="#757575"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:padding="18dp" />

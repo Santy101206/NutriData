@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="#E8F5E8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="👥 Registrar Nuevo Paciente"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#2E7D32"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📋 Información Básica"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#2196F3"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etNombrePaciente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="👤 Nombre completo del paciente"
+            android:padding="14dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etTipoSangre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="🩸 Tipo de sangre (Ej: O+, A-, B+, etc.)"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="📍 Dirección completa"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚕️ Datos Médicos"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#2196F3"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etPeso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="⚖️ Peso (kg)"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etAltura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="📏 Altura (metros)"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="🎂 Edad (años)"
+            android:inputType="number"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:background="#E3F2FD"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvResultadoIMC"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="IMC: --"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#1976D2" />
+
+            <TextView
+                android:id="@+id/tvClasificacion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Complete los datos para calcular"
+                android:textSize="14sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏥 Información Médica Adicional"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#2196F3"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etEnfermedades"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="🤒 Enfermedades conocidas (opcional)"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etAlergias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="⚠️ Alergias (opcional)"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/etSintomas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="🔍 Síntomas actuales (opcional)"
+            android:padding="14dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/layoutResponsable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:padding="16dp"
+            android:background="#FFF3E0"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👨‍👦 Datos del Responsable (Menor de Edad)"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#FF9800"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/etRespNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="👤 Nombre completo del responsable"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etRespCedula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="🆔 Cédula de identidad"
+                android:inputType="number"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etRespEdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="🎂 Edad del responsable"
+                android:inputType="number"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etRespTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="📞 Teléfono de contacto"
+                android:inputType="phone"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etRespRelacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="👪 Relación con el paciente"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💾 Guardar Datos del Paciente"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#2E7D32"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="↩️ Volver al Menú"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#757575"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:padding="14dp" />
+
+    </LinearLayout>
+</ScrollView>
