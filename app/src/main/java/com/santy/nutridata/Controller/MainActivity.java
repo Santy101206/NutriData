@@ -1,11 +1,14 @@
 package com.santy.nutridata.Controller;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.santy.nutridata.Model.ManagerDB;
 import com.santy.nutridata.R;
 
@@ -19,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            1);
 
         etUser = findViewById(R.id.etUser);
         etPass = findViewById(R.id.etPass);

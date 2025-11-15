@@ -54,6 +54,18 @@
         android:padding="18dp" />
 
     <Button
+        android:id="@+id/btnExcel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#4CAF50"
+        android:padding="18dp"
+        android:text="📊 Exportar Excel de Pacientes"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -275,6 +275,49 @@ public class ManagerDB {
             db.close();
         }
     }
+    public List<Datos> obtenerPorMedico(String medico) {
+        List<Datos> lista = new ArrayList<>();
+        SQLiteDatabase db = conexionHelper.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + Constantes.TABLA_DATOS + " WHERE medicoResponsable = ? ORDER BY " +
+                    Constantes.CAMPO_PRIORIDAD + " DESC, " + Constantes.CAMPO_ID + " DESC", new String[]{medico});
+            if (cursor.moveToFirst()) {
+                do {
+                    Datos d = new Datos();
+                    d.setId(cursor.getInt(cursor.getColumnIndexOrThrow(Constantes.CAMPO_ID)));
+                    d.setUsuario(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_USER_DATOS)));
+                    d.setNombrePaciente(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_NOMBRE_PACIENTE)));
+                    d.setTipoSangre(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_TIPO_SANGRE)));
+                    d.setDireccion(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_DIRECCION)));
+                    d.setPeso(cursor.getDouble(cursor.getColumnIndexOrThrow(Constantes.CAMPO_PESO)));
+                    d.setAltura(cursor.getDouble(cursor.getColumnIndexOrThrow(Constantes.CAMPO_ALTURA)));
+                    d.setEdad(cursor.getInt(cursor.getColumnIndexOrThrow(Constantes.CAMPO_EDAD)));
+                    d.setEnfermedades(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_ENFERMEDADES)));
+                    d.setAlergias(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_ALERGIAS)));
+                    d.setSintomas(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_SINTOMAS)));
+                    d.setImc(cursor.getDouble(cursor.getColumnIndexOrThrow(Constantes.CAMPO_IMC)));
+                    d.setClasificacion(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_CLASIFICACION)));
+                    d.setPrioridad(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_PRIORIDAD)));
+                    d.setMedicoResponsable(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_MEDICO_RESPONSABLE)));
+                    d.setRespNombre(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_RESP_NOMBRE)));
+                    d.setRespCedula(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_RESP_CEDULA)));
+                    d.setRespEdad(cursor.getInt(cursor.getColumnIndexOrThrow(Constantes.CAMPO_RESP_EDAD)));
+                    d.setRespTelefono(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_RESP_TELEFONO)));
+                    d.setRespRelacion(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_RESP_RELACION)));
+                    d.setTratamiento(cursor.getString(cursor.getColumnIndexOrThrow(Constantes.CAMPO_TRATAMIENTO)));
+                    lista.add(d);
+                } while (cursor.moveToNext());
+            }
+            return lista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return lista;
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+    }
 
     // ========== MÉTODOS PARA FORMULAS MÉDICAS ==========
 

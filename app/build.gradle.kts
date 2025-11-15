@@ -32,7 +32,8 @@ android {
 }
 
 dependencies {
-
+    implementation("org.apache.poi:poi:3.17")
+    implementation("net.sourceforge.jexcelapi:jxl:2.6.12")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
