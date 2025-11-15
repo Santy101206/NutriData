@@ -90,21 +90,37 @@ public class Datos {
     public void generarIMC(){
         imc = peso / (altura * altura);
     }
-    private String clasificarIMC() {
+    public void generarClasificacionIMC() {
         generarIMC();
-        if (edad < 18) {
-            if (imc < 16) return "Desnutrición Grave 🚨";
-            else if (imc < 18.5) return "Desnutrición Moderada ⚠️";
-            else if (imc < 25) return "Peso Normal ✅";
-            else if (imc < 30) return "Sobrepeso 📈";
-            else return "Obesidad 🔴";
+        if (edad < 18 && imc < 16) clasificacion = "Desnutrición Grave 🚨";
+        else if (edad < 18 && imc < 18.5) clasificacion = "Desnutrición Moderada ⚠️";
+        else if (edad < 18 && imc < 25) clasificacion = "Peso Normal ✅";
+        else if (edad < 18 && imc < 30) clasificacion = "Sobrepeso 📈";
+        else if (edad < 18) clasificacion = "Obesidad 🔴";
+        else if (imc < 18.5)  clasificacion =  "Bajo Peso ⚠️";
+        else if (imc < 25) clasificacion =  "Peso Normal ✅";
+        else if (imc < 30) clasificacion =  "Sobrepeso 📈";
+        else if (imc < 35) clasificacion =  "Obesidad Grado I 🔴";
+        else if (imc < 40) clasificacion = "Obesidad Grado II 🚨";
+        else  clasificacion = "Obesidad Grado III 💀";
+    }
+
+
+
+    public void determinarPrioridad() {
+        if(clasificacion == null ){
+            generarClasificacionIMC();
+        }
+        if (clasificacion.contains("Grave") || clasificacion.contains("Grado III")) {
+            prioridad = "PRIORITARIO";
+        } else if (clasificacion.contains("Moderada") || clasificacion.contains("Grado II") ||
+                clasificacion.contains("Bajo Peso")) {
+            prioridad = "OBSERVACIÓN";
+        } else if (clasificacion.contains("Normal")) {
+            prioridad = "SANO";
         } else {
-            if (imc < 18.5) return "Bajo Peso ⚠️";
-            else if (imc < 25) return "Peso Normal ✅";
-            else if (imc < 30) return "Sobrepeso 📈";
-            else if (imc < 35) return "Obesidad Grado I 🔴";
-            else if (imc < 40) return "Obesidad Grado II 🚨";
-            else return "Obesidad Grado III 💀";
+            prioridad = "OBSERVACIÓN";
         }
     }
+
 }   

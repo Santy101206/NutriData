@@ -83,46 +83,48 @@ public class DataEntryActivity extends AppCompatActivity {
         tvClasificacion = findViewById(R.id.tvClasificacion);
     }
 
+    private Datos obtenerDatosdesdeFormulario(){
+        if (!validarCamposBasicos()) return null;
+
+        double peso = Double.parseDouble(etPeso.getText().toString().trim());
+        double altura = Double.parseDouble(etAltura.getText().toString().trim());
+        int edad = Integer.parseInt(etEdad.getText().toString().trim());
+
+        Datos datos = new Datos();
+        datos.setUsuario(username);
+        datos.setNombrePaciente(etNombrePaciente.getText().toString().trim());
+        datos.setTipoSangre(etTipoSangre.getText().toString().trim());
+        datos.setDireccion(etDireccion.getText().toString().trim());
+        datos.setPeso(peso);
+        datos.setAltura(altura);
+        datos.setEdad(edad);
+        datos.setEnfermedades(etEnfermedades.getText().toString().trim());
+        datos.setAlergias(etAlergias.getText().toString().trim());
+        datos.setSintomas(etSintomas.getText().toString().trim());
+        datos.setMedicoResponsable("Dr. " + username);
+        datos.setTratamiento("");
+
+        datos.generarIMC();
+        datos.generarClasificacionIMC();
+        datos.determinarPrioridad();
+
+        if (edad < 18) {
+            if (!validarCamposResponsable()) return null;
+            datos.setRespNombre(etRespNombre.getText().toString().trim());
+            datos.setRespCedula(etRespCedula.getText().toString().trim());
+            datos.setRespEdad(Integer.parseInt(etRespEdad.getText().toString().trim()));
+            datos.setRespTelefono(etRespTelefono.getText().toString().trim());
+            datos.setRespRelacion(etRespRelacion.getText().toString().trim());
+        }
+        return datos;
+    }
+
     private void guardarDatos() {
         try {
-            if (!validarCamposBasicos()) return;
-
-            double peso = Double.parseDouble(etPeso.getText().toString().trim());
-            double altura = Double.parseDouble(etAltura.getText().toString().trim());
-            int edad = Integer.parseInt(etEdad.getText().toString().trim());
-            double imc = peso / (altura * altura);
-            String clasificacion = clasificarIMC(imc, edad);
-            String prioridad = determinarPrioridad(clasificacion);
-
-            Datos datos = new Datos();
-            datos.setUsuario(username);
-            datos.setNombrePaciente(etNombrePaciente.getText().toString().trim());
-            datos.setTipoSangre(etTipoSangre.getText().toString().trim());
-            datos.setDireccion(etDireccion.getText().toString().trim());
-            datos.setPeso(peso);
-            datos.setAltura(altura);
-            datos.setEdad(edad);
-            datos.setEnfermedades(etEnfermedades.getText().toString().trim());
-            datos.setAlergias(etAlergias.getText().toString().trim());
-            datos.setSintomas(etSintomas.getText().toString().trim());
-            datos.setImc(imc);
-            datos.setClasificacion(clasificacion);
-            datos.setPrioridad(prioridad);
-            datos.setMedicoResponsable("Dr. " + username);
-            datos.setTratamiento("");
-
-            if (edad < 18) {
-                if (!validarCamposResponsable()) return;
-                datos.setRespNombre(etRespNombre.getText().toString().trim());
-                datos.setRespCedula(etRespCedula.getText().toString().trim());
-                datos.setRespEdad(Integer.parseInt(etRespEdad.getText().toString().trim()));
-                datos.setRespTelefono(etRespTelefono.getText().toString().trim());
-                datos.setRespRelacion(etRespRelacion.getText().toString().trim());
-            }
-
+            Datos datos = obtenerDatosdesdeFormulario();
             boolean exito = managerDB.insertarDatos(datos);
             if (exito) {
-                Toast.makeText(this, "✅ Datos del paciente guardados\n" + clasificacion, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "✅ Datos del paciente guardados\n" + datos.getClasificacion(), Toast.LENGTH_LONG).show();
                 limpiarCampos();
             } else {
                 Toast.makeText(this, "❌ Error al guardar los datos", Toast.LENGTH_SHORT).show();
@@ -156,7 +158,6 @@ public class DataEntryActivity extends AppCompatActivity {
 
             double peso = Double.parseDouble(pesoStr);
             double altura = Double.parseDouble(alturaStr);
-            int edad = Integer.parseInt(edadStr);
 
             if (altura <= 0 || peso <= 0) {
                 tvResultadoIMC.setText("IMC: --");
@@ -164,49 +165,23 @@ public class DataEntryActivity extends AppCompatActivity {
                 return;
             }
 
-            double imc = peso / (altura * altura);
-            String clasificacion = clasificarIMC(imc, edad);
-            String prioridad = determinarPrioridad(clasificacion);
+            Datos datos = obtenerDatosdesdeFormulario();
+            datos.setPeso(peso);
+            datos.setAltura(altura);
+            datos.setEdad(Integer.parseInt(edadStr));
 
-            tvResultadoIMC.setText(String.format("IMC: %.1f", imc));
-            tvClasificacion.setText("🏥 " + clasificacion + " | " + getEmojiPrioridad(prioridad) + " " + prioridad);
+            datos.generarIMC();
+            datos.generarClasificacionIMC();
+            datos.determinarPrioridad();
+
+            tvResultadoIMC.setText(String.format("IMC: %.1f", datos.getImc()));
+            tvClasificacion.setText("🏥 " + datos.getClasificacion() + " | " + getEmojiPrioridad(datos.getPrioridad()) + " " + datos.getPrioridad());
 
         } catch (NumberFormatException e) {
             tvResultadoIMC.setText("IMC: --");
             tvClasificacion.setText("Verifique los datos ingresados");
         }
     }
-
-    private String clasificarIMC(double imc, int edad) {
-        if (edad < 18) {
-            if (imc < 16) return "Desnutrición Grave 🚨";
-            else if (imc < 18.5) return "Desnutrición Moderada ⚠️";
-            else if (imc < 25) return "Peso Normal ✅";
-            else if (imc < 30) return "Sobrepeso 📈";
-            else return "Obesidad 🔴";
-        } else {
-            if (imc < 18.5) return "Bajo Peso ⚠️";
-            else if (imc < 25) return "Peso Normal ✅";
-            else if (imc < 30) return "Sobrepeso 📈";
-            else if (imc < 35) return "Obesidad Grado I 🔴";
-            else if (imc < 40) return "Obesidad Grado II 🚨";
-            else return "Obesidad Grado III 💀";
-        }
-    }
-
-    private String determinarPrioridad(String clasificacion) {
-        if (clasificacion.contains("Grave") || clasificacion.contains("Grado III")) {
-            return "PRIORITARIO";
-        } else if (clasificacion.contains("Moderada") || clasificacion.contains("Grado II") ||
-                clasificacion.contains("Bajo Peso")) {
-            return "OBSERVACIÓN";
-        } else if (clasificacion.contains("Normal")) {
-            return "SANO";
-        } else {
-            return "OBSERVACIÓN";
-        }
-    }
-
     private String getEmojiPrioridad(String prioridad) {
         switch (prioridad) {
             case "PRIORITARIO": return "🔴";
