@@ -86,4 +86,25 @@ public class Datos {
 
     public String getTratamiento() { return tratamiento; }
     public void setTratamiento(String tratamiento) { this.tratamiento = tratamiento; }
+
+    public void generarIMC(){
+        imc = peso / (altura * altura);
+    }
+    private String clasificarIMC() {
+        generarIMC();
+        if (edad < 18) {
+            if (imc < 16) return "Desnutrición Grave 🚨";
+            else if (imc < 18.5) return "Desnutrición Moderada ⚠️";
+            else if (imc < 25) return "Peso Normal ✅";
+            else if (imc < 30) return "Sobrepeso 📈";
+            else return "Obesidad 🔴";
+        } else {
+            if (imc < 18.5) return "Bajo Peso ⚠️";
+            else if (imc < 25) return "Peso Normal ✅";
+            else if (imc < 30) return "Sobrepeso 📈";
+            else if (imc < 35) return "Obesidad Grado I 🔴";
+            else if (imc < 40) return "Obesidad Grado II 🚨";
+            else return "Obesidad Grado III 💀";
+        }
+    }
 }   

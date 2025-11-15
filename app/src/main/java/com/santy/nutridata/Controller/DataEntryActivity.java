@@ -20,6 +20,9 @@ public class DataEntryActivity extends AppCompatActivity {
     private ManagerDB managerDB;
     private TextView tvResultadoIMC, tvClasificacion;
 
+
+    private TextWatcher imcTextWatcher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,15 @@ public class DataEntryActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
 
         layoutResponsable.setVisibility(View.GONE);
+
+        imcTextWatcher = new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                calcularIMC();
+            }
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
 
         etPeso.addTextChangedListener(imcTextWatcher);
         etAltura.addTextChangedListener(imcTextWatcher);
@@ -71,14 +83,55 @@ public class DataEntryActivity extends AppCompatActivity {
         tvClasificacion = findViewById(R.id.tvClasificacion);
     }
 
-    private TextWatcher imcTextWatcher = new TextWatcher() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            calcularIMC();
+    private void guardarDatos() {
+        try {
+            if (!validarCamposBasicos()) return;
+
+            double peso = Double.parseDouble(etPeso.getText().toString().trim());
+            double altura = Double.parseDouble(etAltura.getText().toString().trim());
+            int edad = Integer.parseInt(etEdad.getText().toString().trim());
+            double imc = peso / (altura * altura);
+            String clasificacion = clasificarIMC(imc, edad);
+            String prioridad = determinarPrioridad(clasificacion);
+
+            Datos datos = new Datos();
+            datos.setUsuario(username);
+            datos.setNombrePaciente(etNombrePaciente.getText().toString().trim());
+            datos.setTipoSangre(etTipoSangre.getText().toString().trim());
+            datos.setDireccion(etDireccion.getText().toString().trim());
+            datos.setPeso(peso);
+            datos.setAltura(altura);
+            datos.setEdad(edad);
+            datos.setEnfermedades(etEnfermedades.getText().toString().trim());
+            datos.setAlergias(etAlergias.getText().toString().trim());
+            datos.setSintomas(etSintomas.getText().toString().trim());
+            datos.setImc(imc);
+            datos.setClasificacion(clasificacion);
+            datos.setPrioridad(prioridad);
+            datos.setMedicoResponsable("Dr. " + username);
+            datos.setTratamiento("");
+
+            if (edad < 18) {
+                if (!validarCamposResponsable()) return;
+                datos.setRespNombre(etRespNombre.getText().toString().trim());
+                datos.setRespCedula(etRespCedula.getText().toString().trim());
+                datos.setRespEdad(Integer.parseInt(etRespEdad.getText().toString().trim()));
+                datos.setRespTelefono(etRespTelefono.getText().toString().trim());
+                datos.setRespRelacion(etRespRelacion.getText().toString().trim());
+            }
+
+            boolean exito = managerDB.insertarDatos(datos);
+            if (exito) {
+                Toast.makeText(this, "✅ Datos del paciente guardados\n" + clasificacion, Toast.LENGTH_LONG).show();
+                limpiarCampos();
+            } else {
+                Toast.makeText(this, "❌ Error al guardar los datos", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, "⚠️ Revise los datos ingresados", Toast.LENGTH_SHORT).show();
         }
-        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-    };
+    }
 
     private void checkEdad() {
         try {
@@ -163,55 +216,6 @@ public class DataEntryActivity extends AppCompatActivity {
         }
     }
 
-    private void guardarDatos() {
-        try {
-            if (!validarCamposBasicos()) return;
-
-            double peso = Double.parseDouble(etPeso.getText().toString().trim());
-            double altura = Double.parseDouble(etAltura.getText().toString().trim());
-            int edad = Integer.parseInt(etEdad.getText().toString().trim());
-            double imc = peso / (altura * altura);
-            String clasificacion = clasificarIMC(imc, edad);
-            String prioridad = determinarPrioridad(clasificacion);
-
-            Datos datos = new Datos();
-            datos.setUsuario(username);
-            datos.setNombrePaciente(etNombrePaciente.getText().toString().trim());
-            datos.setTipoSangre(etTipoSangre.getText().toString().trim());
-            datos.setDireccion(etDireccion.getText().toString().trim());
-            datos.setPeso(peso);
-            datos.setAltura(altura);
-            datos.setEdad(edad);
-            datos.setEnfermedades(etEnfermedades.getText().toString().trim());
-            datos.setAlergias(etAlergias.getText().toString().trim());
-            datos.setSintomas(etSintomas.getText().toString().trim());
-            datos.setImc(imc);
-            datos.setClasificacion(clasificacion);
-            datos.setPrioridad(prioridad);
-            datos.setMedicoResponsable("Dr. " + username);
-            datos.setTratamiento("");
-
-            if (edad < 18) {
-                if (!validarCamposResponsable()) return;
-                datos.setRespNombre(etRespNombre.getText().toString().trim());
-                datos.setRespCedula(etRespCedula.getText().toString().trim());
-                datos.setRespEdad(Integer.parseInt(etRespEdad.getText().toString().trim()));
-                datos.setRespTelefono(etRespTelefono.getText().toString().trim());
-                datos.setRespRelacion(etRespRelacion.getText().toString().trim());
-            }
-
-            boolean exito = managerDB.insertarDatos(datos);
-            if (exito) {
-                Toast.makeText(this, "✅ Datos del paciente guardados\n" + clasificacion, Toast.LENGTH_LONG).show();
-                limpiarCampos();
-            } else {
-                Toast.makeText(this, "❌ Error al guardar los datos", Toast.LENGTH_SHORT).show();
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(this, "⚠️ Revise los datos ingresados", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private boolean validarCamposBasicos() {
         if (etNombrePaciente.getText().toString().trim().isEmpty() ||
