@@ -351,4 +351,31 @@ public class ManagerDB {
             db.close();
         }
     }
+
+
+    // Se mueven los metodos que estaban en conexion helper
+    private void insertarEnfermedad(SQLiteDatabase db, String categoria, String nombreEnfermedad,
+                                    String medicamentos, String dosis, String duracion,
+                                    String recomendaciones, String dieta, String hidratacion,
+                                    String contraindicaciones) {
+        db.execSQL("INSERT INTO " + Constantes.TABLA_FORMULAS_MEDICAS + " (" +
+                Constantes.CAMPO_CATEGORIA + ", " +
+                Constantes.CAMPO_NOMBRE_ENFERMEDAD + ", " +
+                Constantes.CAMPO_MEDICAMENTOS + ", " +
+                Constantes.CAMPO_DOSIS + ", " +
+                Constantes.CAMPO_DURACION + ", " +
+                Constantes.CAMPO_RECOMENDACIONES + ", " +
+                Constantes.CAMPO_DIETA + ", " +
+                Constantes.CAMPO_HIDRATACION + ", " +
+                Constantes.CAMPO_CONTRAINDICACIONES + ") VALUES ('" +
+                categoria + "', '" +
+                nombreEnfermedad + "', '" +
+                medicamentos + "', '" +
+                dosis + "', '" +
+                duracion + "', '" +
+                recomendaciones + "', '" +
+                dieta + "', '" +
+                hidratacion + "', '" +
+                contraindicaciones + "')");
+    }
 }
