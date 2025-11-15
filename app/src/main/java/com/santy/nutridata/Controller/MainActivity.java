@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 intent.putExtra("username", user);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
                 finish();
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
         });
     }
 }
