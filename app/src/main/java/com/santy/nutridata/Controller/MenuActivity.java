@@ -70,6 +70,7 @@ public class MenuActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(v -> {
             startActivity(new Intent(MenuActivity.this, MainActivity.class));
             finish();
+            overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
         });
 
         btnExcel.setOnClickListener(v -> {
